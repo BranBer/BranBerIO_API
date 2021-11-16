@@ -28,6 +28,7 @@ const projectTypes = gql`
     ): response
 
     updateProject(
+      id: Int!
       name: String
       description: String
       dateCreated: Date

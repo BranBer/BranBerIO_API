@@ -28,6 +28,22 @@ const projectResolvers: Resolvers = {
         message: "Successfully created a project",
       } as responseType;
     },
+    updateProject: async (_, args, context, ____) => {
+      let projectFields = removeNullKeyValues({
+        dateCreated: args.dateCreated,
+        description: args.description,
+        id: args.id,
+        images: args.images,
+        name: args.name as string,
+        projectLink: args.projectLink,
+        repoLink: args.repoLink,
+      });
+
+      ProjectModel.update(projectFields, { where: { id: args.id } });
+      return {
+        message: "Successfully created a project",
+      } as responseType;
+    },
   },
 };
 
