@@ -2,9 +2,14 @@ import { responseType } from "../schemas/response";
 import { Project, Resolvers } from "../generated/types/graphql";
 import ProjectModel from "../../models/project";
 import { ApolloError, ValidationError } from "apollo-server-errors";
+import removeNullKeyValues from "../../utils/removeNullKeyValues";
+import dateScalar from "../scalars/date";
+import imageScalar from "../scalars/image";
 
 const projectsPerPage: number = 24;
 const projectResolvers: Resolvers = {
+  Date: dateScalar,
+  Image: imageScalar,
   Query: {
     projects: async (_, args, context, ____) => {
       const projects = await ProjectModel.findAll({
@@ -18,9 +23,11 @@ const projectResolvers: Resolvers = {
   Mutation: {
     createProject: async (_, args, context, ____) => {
       const project = ProjectModel.build(args);
-      await project.save();
+      const projectCreatedStatus = await project.save();
 
-      if (!project) {
+      console.log("Project Saved!");
+
+      if (!projectCreatedStatus) {
         throw new ApolloError("Something went wrong when creating a project");
       }
 

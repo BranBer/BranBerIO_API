@@ -21,7 +21,7 @@ class ProjectModel
 ProjectModel.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
@@ -53,6 +53,8 @@ ProjectModel.init(
   {
     sequelize: dbConnection,
     tableName: "projects",
+    underscored: true,
+    timestamps: false,
   }
 );
 

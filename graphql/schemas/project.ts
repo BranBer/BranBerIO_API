@@ -2,6 +2,7 @@ import { gql } from "apollo-server";
 
 const projectTypes = gql`
   scalar Date
+  scalar Image
 
   type Project {
     id: Int!
@@ -10,7 +11,7 @@ const projectTypes = gql`
     dateCreated: Date
     repoLink: String
     projectLink: String
-    images: [String]
+    images: [Image]
   }
 
   type Query {
@@ -24,7 +25,7 @@ const projectTypes = gql`
       dateCreated: Date
       repoLink: String
       projectLink: String
-      images: [String]
+      images: [Image]
     ): response
 
     updateProject(
@@ -34,7 +35,7 @@ const projectTypes = gql`
       dateCreated: Date
       repoLink: String
       projectLink: String
-      images: [String]
+      images: [Image]
     ): response
   }
 `;
