@@ -4,15 +4,15 @@ import ProjectModel from "../../models/project";
 import { ApolloError, ValidationError } from "apollo-server-errors";
 import removeNullKeyValues from "../../utils/removeNullKeyValues";
 import dateScalar from "../scalars/date";
-import imageScalar from "../scalars/image";
 import { GraphQLUpload } from "graphql-upload";
-import fileStream from "fs";
-import { finished } from "stream";
+import validateImageExtension from "../../utils/validateImageExtension";
+import createFile from "../../utils/createFile";
+import handleFileUpload from "../../utils/handleFileUpload";
 
 const projectsPerPage: number = 24;
 const projectResolvers: Resolvers = {
   Date: dateScalar,
-  //Upload: GraphQLUpload as any,
+  Upload: GraphQLUpload as any,
   Query: {
     projects: async (_, args, context, ____) => {
       const projects = await ProjectModel.findAll({
@@ -37,7 +37,6 @@ const projectResolvers: Resolvers = {
       } as responseType;
     },
     updateProject: async (_, args, context, ____) => {
-      console.log("Updating Project");
       let projectFields = removeNullKeyValues({
         dateCreated: args.dateCreated,
         description: args.description,
@@ -47,22 +46,27 @@ const projectResolvers: Resolvers = {
         repoLink: args.repoLink,
       });
 
+      let project = await ProjectModel.findOne({ where: { id: args.id } });
+      let imagePaths = [];
+
+      if (!project) {
+        return { message: "No project found" };
+      }
+
       if (args.images) {
         for (let i in args.images) {
           let img = await args.images[i];
-          const { filename, mimetype, encoding, createReadStream } = img.file;
-          let data = [];
-          let stream = createReadStream();
 
-          stream.on("data", (chunk: Buffer) => {
-            //console.log(Array.from(chunk.values()));
-          });
+          let path = handleFileUpload(img, project.name, "/static/projects");
+          imagePaths.push(path);
         }
+
+        projectFields = { ...projectFields, images: imagePaths };
       }
 
       ProjectModel.update(projectFields, { where: { id: args.id } });
       return {
-        message: "Successfully created a project",
+        message: "Successfully updated a project",
       } as responseType;
     },
   },

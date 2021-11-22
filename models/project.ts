@@ -46,7 +46,7 @@ ProjectModel.init(
       allowNull: true,
     },
     images: {
-      type: DataTypes.ARRAY(DataTypes.BLOB),
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
     },
   },
