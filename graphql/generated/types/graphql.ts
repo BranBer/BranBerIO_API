@@ -13,8 +13,15 @@ export type Scalars = {
   Float: number;
   /** Date custom scalar type */
   Date: any;
-  /** Image custom scalar type */
   Image: any;
+  Upload: any;
+};
+
+export type File = {
+  __typename?: 'File';
+  encoding: Scalars['String'];
+  filename: Scalars['String'];
+  mimetype: Scalars['String'];
 };
 
 export type Mutation = {
@@ -27,7 +34,7 @@ export type Mutation = {
 export type MutationCreateProjectArgs = {
   dateCreated?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
-  images?: Maybe<Array<Maybe<Scalars['Image']>>>;
+  images?: Maybe<Array<Maybe<Scalars['Upload']>>>;
   name: Scalars['String'];
   projectLink?: Maybe<Scalars['String']>;
   repoLink?: Maybe<Scalars['String']>;
@@ -38,7 +45,7 @@ export type MutationUpdateProjectArgs = {
   dateCreated?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
-  images?: Maybe<Array<Maybe<Scalars['Image']>>>;
+  images?: Maybe<Array<Maybe<Scalars['Upload']>>>;
   name?: Maybe<Scalars['String']>;
   projectLink?: Maybe<Scalars['String']>;
   repoLink?: Maybe<Scalars['String']>;
@@ -49,7 +56,7 @@ export type Project = {
   dateCreated?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
-  images?: Maybe<Array<Maybe<Scalars['Image']>>>;
+  images?: Maybe<Array<Maybe<Scalars['Upload']>>>;
   name: Scalars['String'];
   projectLink?: Maybe<Scalars['String']>;
   repoLink?: Maybe<Scalars['String']>;
@@ -142,12 +149,14 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  File: ResolverTypeWrapper<File>;
   Image: ResolverTypeWrapper<Scalars['Image']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   Project: ResolverTypeWrapper<Project>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Upload: ResolverTypeWrapper<Scalars['Upload']>;
   response: ResolverTypeWrapper<Response>;
 };
 
@@ -155,18 +164,27 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Date: Scalars['Date'];
+  File: File;
   Image: Scalars['Image'];
   Int: Scalars['Int'];
   Mutation: {};
   Project: Project;
   Query: {};
   String: Scalars['String'];
+  Upload: Scalars['Upload'];
   response: Response;
 };
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date';
 }
+
+export type FileResolvers<ContextType = any, ParentType extends ResolversParentTypes['File'] = ResolversParentTypes['File']> = {
+  encoding?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  filename?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mimetype?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export interface ImageScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Image'], any> {
   name: 'Image';
@@ -181,7 +199,7 @@ export type ProjectResolvers<ContextType = any, ParentType extends ResolversPare
   dateCreated?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  images?: Resolver<Maybe<Array<Maybe<ResolversTypes['Image']>>>, ParentType, ContextType>;
+  images?: Resolver<Maybe<Array<Maybe<ResolversTypes['Upload']>>>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   projectLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   repoLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -192,6 +210,10 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   projects?: Resolver<Maybe<Array<Maybe<ResolversTypes['Project']>>>, ParentType, ContextType, RequireFields<QueryProjectsArgs, 'page' | 'size'>>;
 };
 
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload';
+}
+
 export type ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['response'] = ResolversParentTypes['response']> = {
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -199,10 +221,12 @@ export type ResponseResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type Resolvers<ContextType = any> = {
   Date?: GraphQLScalarType;
+  File?: FileResolvers<ContextType>;
   Image?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Project?: ProjectResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Upload?: GraphQLScalarType;
   response?: ResponseResolvers<ContextType>;
 };
 
