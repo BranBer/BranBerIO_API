@@ -9,7 +9,6 @@ import authenticatedUser from "./types/authenticatedUser";
 
 require("dotenv").config();
 
-//TODO: Implement servering static images
 const startServer = async () => {
   const app = express();
   app.use(graphqlUploadExpress());
