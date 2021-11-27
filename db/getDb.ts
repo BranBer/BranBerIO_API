@@ -1,7 +1,5 @@
-const { Pool, Client } = require("pg");
 import { Sequelize } from "sequelize";
-
-var types = require("pg").types;
+require("dotenv").config({ __dirname: "../.env" });
 
 const getDb = ({
   user = "",
@@ -28,11 +26,11 @@ const getDb = ({
 };
 
 const dbConnection: Sequelize = getDb({
-  user: process.env.PGUSER!,
-  host: process.env.PGHOST!,
-  password: process.env.PGPASSWORD!,
-  database: process.env.PGDATABASE,
-  port: +process.env.PGPORT!,
+  user: process.env.PG_USER!,
+  host: process.env.PG_HOST!,
+  password: process.env.PG_PASSWORD!,
+  database: process.env.PG_DATABASE,
+  port: +process.env.PG_PORT!,
 });
 
 export default dbConnection;

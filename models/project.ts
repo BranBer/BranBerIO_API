@@ -1,12 +1,10 @@
 import { Sequelize, DataTypes, ModelCtor, Optional } from "sequelize";
 import dbConnection from "../db/getDb";
-import { Project } from "../graphql/generated/types/graphql";
+import { Project } from "../types/generated/graphql";
 import { Model } from "sequelize";
 
-interface ProjectsCreationAttributes extends Optional<Project, "id"> {}
-
 class ProjectModel
-  extends Model<Project, ProjectsCreationAttributes>
+  extends Model<Project, Optional<Project, "id">>
   implements Project
 {
   public id!: number;
@@ -24,6 +22,7 @@ ProjectModel.init(
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      unique: true,
     },
     name: {
       type: DataTypes.STRING,

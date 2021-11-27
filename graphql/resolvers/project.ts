@@ -1,5 +1,5 @@
 import { responseType } from "../schemas/response";
-import { Project, Resolvers } from "../generated/types/graphql";
+import { Project, Resolvers } from "../../types/generated/graphql";
 import ProjectModel from "../../models/project";
 import { ApolloError, ValidationError } from "apollo-server-errors";
 import removeNullKeyValues from "../../utils/removeNullKeyValues";
@@ -24,6 +24,7 @@ const projectResolvers: Resolvers = {
     },
   },
   Mutation: {
+    //Needs more testing
     createProject: async (_, args, context, ____) => {
       const project = ProjectModel.build(args);
       const projectCreatedStatus = await project.save();

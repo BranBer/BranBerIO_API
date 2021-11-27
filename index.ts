@@ -4,9 +4,12 @@ import resolvers from "./graphql/resolvers";
 import dbConnection from "./db/getDb";
 import express from "express";
 import { graphqlUploadExpress } from "graphql-upload";
+import { getAuthorizedUser, userIsAuthorized } from "./auth/authorize";
+import authenticatedUser from "./types/authenticatedUser";
 
 require("dotenv").config();
 
+//TODO: Implement servering static images
 const startServer = async () => {
   const app = express();
   app.use(graphqlUploadExpress());
@@ -16,6 +19,10 @@ const startServer = async () => {
     resolvers: resolvers,
     context: ({ req }) => ({
       connection: dbConnection,
+      user: getAuthorizedUser(req),
+      isAuthorized: (user: authenticatedUser | null) => {
+        userIsAuthorized(user);
+      },
     }),
   });
 

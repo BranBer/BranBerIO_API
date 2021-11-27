@@ -1,5 +1,5 @@
 import projectResolvers from "./resolvers/project";
-
-const resolvers = [projectResolvers];
+import userResolvers from "./resolvers/user";
+const resolvers = [projectResolvers, userResolvers];
 
 export default resolvers;

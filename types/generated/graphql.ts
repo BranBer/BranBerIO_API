@@ -14,6 +14,7 @@ export type Scalars = {
   /** Date custom scalar type */
   Date: any;
   Image: any;
+  /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 };
 
@@ -27,6 +28,8 @@ export type File = {
 export type Mutation = {
   __typename?: 'Mutation';
   createProject?: Maybe<Response>;
+  login?: Maybe<Token>;
+  register?: Maybe<Response>;
   updateProject?: Maybe<Response>;
 };
 
@@ -38,6 +41,20 @@ export type MutationCreateProjectArgs = {
   name: Scalars['String'];
   projectLink?: Maybe<Scalars['String']>;
   repoLink?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationLoginArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+
+export type MutationRegisterArgs = {
+  description?: Maybe<Scalars['String']>;
+  displayName: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 
@@ -71,6 +88,22 @@ export type Query = {
 export type QueryProjectsArgs = {
   page: Scalars['Int'];
   size: Scalars['Int'];
+};
+
+export type Token = {
+  __typename?: 'Token';
+  token: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
+  description: Scalars['String'];
+  displayName: Scalars['String'];
+  email: Scalars['String'];
+  id: Scalars['Int'];
+  isActive: Scalars['Boolean'];
+  isAdmin: Scalars['Boolean'];
+  password: Scalars['String'];
 };
 
 export type Response = {
@@ -156,7 +189,9 @@ export type ResolversTypes = {
   Project: ResolverTypeWrapper<Project>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Token: ResolverTypeWrapper<Token>;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
+  User: ResolverTypeWrapper<User>;
   response: ResolverTypeWrapper<Response>;
 };
 
@@ -171,7 +206,9 @@ export type ResolversParentTypes = {
   Project: Project;
   Query: {};
   String: Scalars['String'];
+  Token: Token;
   Upload: Scalars['Upload'];
+  User: User;
   response: Response;
 };
 
@@ -192,6 +229,8 @@ export interface ImageScalarConfig extends GraphQLScalarTypeConfig<ResolversType
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createProject?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationCreateProjectArgs, 'name'>>;
+  login?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
+  register?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'displayName' | 'email' | 'password'>>;
   updateProject?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationUpdateProjectArgs, 'id'>>;
 };
 
@@ -210,9 +249,25 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   projects?: Resolver<Maybe<Array<Maybe<ResolversTypes['Project']>>>, ParentType, ContextType, RequireFields<QueryProjectsArgs, 'page' | 'size'>>;
 };
 
+export type TokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = {
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
   name: 'Upload';
 }
+
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  displayName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  isActive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  isAdmin?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['response'] = ResolversParentTypes['response']> = {
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -226,7 +281,9 @@ export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   Project?: ProjectResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Token?: TokenResolvers<ContextType>;
   Upload?: GraphQLScalarType;
+  User?: UserResolvers<ContextType>;
   response?: ResponseResolvers<ContextType>;
 };
 
