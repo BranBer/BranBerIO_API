@@ -13,6 +13,7 @@ require("dotenv").config();
 const startServer = async () => {
   const app = express();
   app.use(graphqlUploadExpress());
+  app.use(express.static("static"));
 
   const server = new ApolloServer({
     typeDefs: typeDefs,
