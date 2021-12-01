@@ -17,7 +17,7 @@ const handleFileUpload = (
 
   validateImageExtension(fileExtension);
 
-  let fullFileName = `${filename}-${now}.${fileExtension}`;
+  let fullFileName = `${now}-${filename}`;
   let fullPath = `${location}/${validFolderName}`;
   createFile(createReadStream(), fullFileName, fullPath);
 
