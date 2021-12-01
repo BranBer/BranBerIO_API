@@ -1,6 +1,8 @@
 import { Resolvers, User } from "../../types/generated/graphql";
 import authenticate from "../../auth/authenticate";
 import UserModel from "../../models/user";
+
+//TODO: Email Verification
 const userResolvers: Resolvers = {
   Mutation: {
     login: async (_, args, __, ___) => {

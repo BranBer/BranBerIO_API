@@ -18,7 +18,7 @@ const projectTypes = gql`
     dateCreated: Date
     repoLink: String
     projectLink: String
-    images: [Upload]
+    images: [String]
   }
 
   type Query {

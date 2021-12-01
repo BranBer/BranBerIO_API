@@ -73,7 +73,7 @@ export type Project = {
   dateCreated?: Maybe<Scalars['Date']>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
-  images?: Maybe<Array<Maybe<Scalars['Upload']>>>;
+  images?: Maybe<Array<Maybe<Scalars['String']>>>;
   name: Scalars['String'];
   projectLink?: Maybe<Scalars['String']>;
   repoLink?: Maybe<Scalars['String']>;
@@ -238,7 +238,7 @@ export type ProjectResolvers<ContextType = any, ParentType extends ResolversPare
   dateCreated?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  images?: Resolver<Maybe<Array<Maybe<ResolversTypes['Upload']>>>, ParentType, ContextType>;
+  images?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   projectLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   repoLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

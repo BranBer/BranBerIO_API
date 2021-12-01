@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes, ModelCtor, Optional } from "sequelize";
+import { DataTypes, Optional } from "sequelize";
 import dbConnection from "../db/getDb";
 import { Project } from "../types/generated/graphql";
 import { Model } from "sequelize";
