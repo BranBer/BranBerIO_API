@@ -19,6 +19,7 @@ const projectTypes = gql`
     repoLink: String
     projectLink: String
     images: [String]
+    tags: [String]
   }
 
   type Query {
@@ -33,6 +34,7 @@ const projectTypes = gql`
       repoLink: String
       projectLink: String
       images: [Upload]
+      tags: [String]
     ): response
 
     updateProject(
@@ -43,6 +45,7 @@ const projectTypes = gql`
       repoLink: String
       projectLink: String
       images: [Upload]
+      tags: [String]
     ): response
   }
 `;

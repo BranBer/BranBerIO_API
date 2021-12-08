@@ -41,6 +41,7 @@ export type MutationCreateProjectArgs = {
   name: Scalars['String'];
   projectLink?: Maybe<Scalars['String']>;
   repoLink?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
@@ -66,6 +67,7 @@ export type MutationUpdateProjectArgs = {
   name?: Maybe<Scalars['String']>;
   projectLink?: Maybe<Scalars['String']>;
   repoLink?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type Project = {
@@ -77,6 +79,7 @@ export type Project = {
   name: Scalars['String'];
   projectLink?: Maybe<Scalars['String']>;
   repoLink?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type Query = {
@@ -242,6 +245,7 @@ export type ProjectResolvers<ContextType = any, ParentType extends ResolversPare
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   projectLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   repoLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

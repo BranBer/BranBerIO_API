@@ -38,14 +38,9 @@ const projectResolvers: Resolvers = {
       } as responseType;
     },
     updateProject: async (_, args, context, ____) => {
-      let projectFields = removeNullKeyValues({
-        dateCreated: args.dateCreated,
-        description: args.description,
-        images: args.images,
-        name: args.name as string,
-        projectLink: args.projectLink,
-        repoLink: args.repoLink,
-      });
+      let projectFields = removeNullKeyValues(
+        args
+      );
 
       let project = await ProjectModel.findOne({ where: { id: args.id } });
       let imagePaths = [];

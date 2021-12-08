@@ -14,6 +14,7 @@ class ProjectModel
   public repoLink!: string;
   public projectLink!: string;
   public images!: string[];
+  public tags!: string[];
 }
 
 ProjectModel.init(
@@ -48,6 +49,10 @@ ProjectModel.init(
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
     },
+    tags: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true,
+    }
   },
   {
     sequelize: dbConnection,
