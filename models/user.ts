@@ -11,6 +11,8 @@ class UserModel extends Model<User, Optional<User, "id">> implements User {
   public description!: string;
   public isAdmin!: boolean;
   public isActive!: boolean;
+  public picture!: string;
+  public accountType!: string;
   public comparePassword = async (password: string) => {
     return await bcrypt.compare(password, this.password);
   };
@@ -31,7 +33,7 @@ UserModel.init(
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     displayName: {
       type: DataTypes.STRING,
@@ -51,6 +53,14 @@ UserModel.init(
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
+    picture: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    accountType: {
+      type: DataTypes.STRING,
+      defaultValue: "regular",
+    },
   },
   {
     sequelize: dbConnection,
@@ -59,8 +69,10 @@ UserModel.init(
     timestamps: false,
     hooks: {
       beforeValidate: (instance) => {
-        let hash = bcrypt.hashSync(instance.password);
-        instance.password = hash;
+        if (instance.accountType === "regular") {
+          let hash = bcrypt.hashSync(instance.password);
+          instance.password = hash;
+        }
 
         instance.email = instance.email.toLowerCase();
       },

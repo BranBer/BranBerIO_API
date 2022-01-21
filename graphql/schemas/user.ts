@@ -8,11 +8,13 @@ const userTypes = gql`
   type User {
     id: Int!
     email: String!
-    password: String!
+    password: String
     displayName: String!
-    description: String!
-    isAdmin: Boolean!
-    isActive: Boolean!
+    description: String
+    isAdmin: Boolean
+    isActive: Boolean
+    picture: String
+    accountType: String
   }
 
   type Mutation {
@@ -21,6 +23,14 @@ const userTypes = gql`
       password: String!
       displayName: String!
       description: String
+    ): response
+
+    loginGoogle(
+      idToken: String!
+      aud: String!
+      email: String!
+      displayName: String!
+      picture: String
     ): response
 
     login(email: String!, password: String!): Token

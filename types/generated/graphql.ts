@@ -29,6 +29,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createProject?: Maybe<Response>;
   login?: Maybe<Token>;
+  loginGoogle?: Maybe<Response>;
   register?: Maybe<Response>;
   updateProject?: Maybe<Response>;
 };
@@ -48,6 +49,15 @@ export type MutationCreateProjectArgs = {
 export type MutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationLoginGoogleArgs = {
+  aud: Scalars['String'];
+  displayName: Scalars['String'];
+  email: Scalars['String'];
+  idToken: Scalars['String'];
+  picture?: Maybe<Scalars['String']>;
 };
 
 
@@ -100,13 +110,15 @@ export type Token = {
 
 export type User = {
   __typename?: 'User';
-  description: Scalars['String'];
+  accountType?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   displayName: Scalars['String'];
   email: Scalars['String'];
   id: Scalars['Int'];
-  isActive: Scalars['Boolean'];
-  isAdmin: Scalars['Boolean'];
-  password: Scalars['String'];
+  isActive?: Maybe<Scalars['Boolean']>;
+  isAdmin?: Maybe<Scalars['Boolean']>;
+  password?: Maybe<Scalars['String']>;
+  picture?: Maybe<Scalars['String']>;
 };
 
 export type Response = {
@@ -233,6 +245,7 @@ export interface ImageScalarConfig extends GraphQLScalarTypeConfig<ResolversType
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createProject?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationCreateProjectArgs, 'name'>>;
   login?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
+  loginGoogle?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationLoginGoogleArgs, 'aud' | 'displayName' | 'email' | 'idToken'>>;
   register?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'displayName' | 'email' | 'password'>>;
   updateProject?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationUpdateProjectArgs, 'id'>>;
 };
@@ -263,13 +276,15 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 }
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  accountType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   displayName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  isActive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  isAdmin?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  isActive?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  isAdmin?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  picture?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
