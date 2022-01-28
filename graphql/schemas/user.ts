@@ -27,7 +27,14 @@ const userTypes = gql`
 
     loginGoogle(
       idToken: String!
-      aud: String!
+      email: String!
+      displayName: String!
+      picture: String
+    ): response
+
+    loginFacebook(
+      inputToken: String!
+      accessToken: String!
       email: String!
       displayName: String!
       picture: String

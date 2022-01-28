@@ -20,11 +20,11 @@ const userResolvers: Resolvers = {
     },
     loginGoogle: async (
       _,
-      { idToken, aud, email, displayName, picture },
+      { idToken, email, displayName, picture },
       __,
       ___
     ) => {
-      verifyGoogleToken(idToken, aud).catch((err) => {
+      verifyGoogleToken(idToken).catch((err) => {
         throw new AuthenticationError(
           "Something went wrong when trying to sign in with google"
         );

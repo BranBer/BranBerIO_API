@@ -29,6 +29,7 @@
     "@types/pg": "^8.6.1",
     "apollo-server": "^3.5.0",
     "apollo-server-express": "^3.5.0",
+    "axios": "^0.25.0",
     "bcryptjs": "^2.4.3",
     "google-auth-library": "^7.11.0",
     "graphql": "^16.0.1",
