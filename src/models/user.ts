@@ -79,5 +79,6 @@ UserModel.init(
     },
   }
 );
+UserModel.sync();
 
 export default UserModel;

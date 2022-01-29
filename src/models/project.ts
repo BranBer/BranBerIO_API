@@ -52,7 +52,7 @@ ProjectModel.init(
     tags: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
-    }
+    },
   },
   {
     sequelize: dbConnection,
@@ -61,5 +61,6 @@ ProjectModel.init(
     timestamps: false,
   }
 );
+ProjectModel.sync();
 
 export default ProjectModel;
