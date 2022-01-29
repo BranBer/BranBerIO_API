@@ -1,11 +1,11 @@
 import { ApolloServer } from "apollo-server-express";
-import typeDefs from "./graphql/typeDefs";
-import resolvers from "./graphql/resolvers";
-import dbConnection from "./db/getDb";
+import typeDefs from "./src/graphql/typeDefs";
+import resolvers from "./src/graphql/resolvers";
+import dbConnection from "./src/db/getDb";
 import express from "express";
 import { graphqlUploadExpress } from "graphql-upload";
-import { getAuthorizedUser, userIsAuthorized } from "./auth/authorize";
-import authenticatedUser from "./types/authenticatedUser";
+import { getAuthorizedUser, userIsAuthorized } from "./src/auth/authorize";
+import authenticatedUser from "./src/types/authenticatedUser";
 
 require("dotenv").config();
 
