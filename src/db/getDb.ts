@@ -9,7 +9,7 @@ const getDb = ({
   database = "",
 }) => {
   const sequelize: Sequelize = new Sequelize(database, user, password, {
-    host: "localhost",
+    host: host ? host : "localhost",
     dialect: "postgres",
   });
 
