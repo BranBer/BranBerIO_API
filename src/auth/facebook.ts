@@ -21,4 +21,4 @@ const verifyFacebookToken = async (inputToken: string, accessToken: string) => {
   return data;
 };
 
-export default verifyGoogleToken;
+export default verifyFacebookToken;

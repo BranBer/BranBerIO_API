@@ -29,6 +29,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createProject?: Maybe<Response>;
   login?: Maybe<Token>;
+  loginFacebook?: Maybe<Response>;
   loginGoogle?: Maybe<Response>;
   register?: Maybe<Response>;
   updateProject?: Maybe<Response>;
@@ -49,6 +50,15 @@ export type MutationCreateProjectArgs = {
 export type MutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationLoginFacebookArgs = {
+  accessToken: Scalars['String'];
+  displayName: Scalars['String'];
+  email: Scalars['String'];
+  inputToken: Scalars['String'];
+  picture?: Maybe<Scalars['String']>;
 };
 
 
@@ -244,6 +254,7 @@ export interface ImageScalarConfig extends GraphQLScalarTypeConfig<ResolversType
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createProject?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationCreateProjectArgs, 'name'>>;
   login?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
+  loginFacebook?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationLoginFacebookArgs, 'accessToken' | 'displayName' | 'email' | 'inputToken'>>;
   loginGoogle?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationLoginGoogleArgs, 'displayName' | 'email' | 'idToken'>>;
   register?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'displayName' | 'email' | 'password'>>;
   updateProject?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationUpdateProjectArgs, 'id'>>;
