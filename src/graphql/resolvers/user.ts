@@ -57,11 +57,11 @@ const userResolvers: Resolvers = {
     },
     loginFacebook: async (
       _,
-      { inputToken, accessToken, email, displayName, picture },
+      { inputToken, email, displayName, picture },
       __,
       ___
     ) => {
-      verifyFacebookToken(inputToken, accessToken).catch((err) => {
+      verifyFacebookToken(inputToken).catch((err) => {
         throw new AuthenticationError(
           "Something went wrong when trying to sign in with facebook"
         );

@@ -34,7 +34,6 @@ const userTypes = gql`
 
     loginFacebook(
       inputToken: String!
-      accessToken: String!
       email: String!
       displayName: String!
       picture: String
