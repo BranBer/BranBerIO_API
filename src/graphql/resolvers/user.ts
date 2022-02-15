@@ -74,18 +74,18 @@ const userResolvers: Resolvers = {
         accountType: "facebook",
       };
 
-      let [user, created] = await UserModel.findOrCreate({
+      let userPromise = UserModel.findOrCreate({
         where: {
           email: email,
         },
         defaults: userData,
-      });
-
-      if (!user) {
-        throw new AuthenticationError(
-          "Something went wrong when trying to sign in with google"
-        );
-      }
+      })
+        .then((user) => user)
+        .catch((err) => {
+          throw new AuthenticationError(
+            "Something went wrong when trying to sign in with facebook"
+          );
+        });
 
       return {
         message: "Successfully logged in as facebook user",
