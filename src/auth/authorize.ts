@@ -17,10 +17,18 @@ const getAuthorizedUser = (req: Request) => {
 
 const userIsAuthorized = (user: authenticatedUser | null) => {
   if (user) {
-    return;
+    return true;
   }
 
   throw new ForbiddenError("Not Authorized");
 };
 
-export { getAuthorizedUser, userIsAuthorized };
+const userIsAdmin = (user: authenticatedUser | null) => {
+  if (user && user.isAdmin) {
+    return true;
+  }
+
+  throw new ForbiddenError("Not Authorized");
+};
+
+export { getAuthorizedUser, userIsAuthorized, userIsAdmin };

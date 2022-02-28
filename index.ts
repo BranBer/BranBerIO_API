@@ -9,10 +9,15 @@ import authenticatedUser from "./src/types/authenticatedUser";
 
 require("dotenv").config();
 
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+};
+
 const startServer = async () => {
   const app = express();
   app.use(graphqlUploadExpress());
-  app.use(express.static("static"));
+  app.use("/static", express.static(__dirname + "/static"));
 
   const server = new ApolloServer({
     typeDefs: typeDefs,
@@ -23,11 +28,14 @@ const startServer = async () => {
       isAuthorized: (user: authenticatedUser | null) => {
         userIsAuthorized(user);
       },
+      userIsAdmin: (user: authenticatedUser | null) => {
+        userIsAuthorized(user);
+      },
     }),
   });
 
   await server.start();
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, cors: corsOptions });
 
   app.listen({ port: 4000 }, () =>
     console.log(`🚀 Server ready at http://localhost:4000/graphql`)

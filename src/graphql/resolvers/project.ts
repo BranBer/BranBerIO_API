@@ -33,14 +33,28 @@ const projectResolvers: Resolvers = {
         throw new ApolloError("Something went wrong when creating a project");
       }
 
+      if (project && args && args.images) {
+        let imagePaths = [];
+
+        for (let i in args.images) {
+          let img = await args.images[i];
+
+          let path = handleFileUpload(img, project.name, "/static/projects");
+          imagePaths.push(path);
+        }
+
+        ProjectModel.update(
+          { images: imagePaths },
+          { where: { id: project.id } }
+        );
+      }
+
       return {
         message: "Successfully created a project",
       } as responseType;
     },
     updateProject: async (_, args, context, ____) => {
-      let projectFields = removeNullKeyValues(
-        args
-      );
+      let projectFields = removeNullKeyValues(args);
 
       let project = await ProjectModel.findOne({ where: { id: args.id } });
       let imagePaths = [];
