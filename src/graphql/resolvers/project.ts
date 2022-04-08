@@ -1,7 +1,11 @@
 import { responseType } from "../schemas/response";
 import { Project, Resolvers } from "../../types/generated/graphql";
 import ProjectModel from "../../models/project";
-import { ApolloError, ValidationError } from "apollo-server-errors";
+import {
+  ApolloError,
+  ValidationError,
+  AuthenticationError,
+} from "apollo-server-errors";
 import removeNullKeyValues from "../../utils/removeNullKeyValues";
 import dateScalar from "../scalars/date";
 import { GraphQLUpload } from "graphql-upload";
@@ -26,6 +30,9 @@ const projectResolvers: Resolvers = {
   Mutation: {
     //Needs more testing
     createProject: async (_, args, context, ____) => {
+      if (!context.user) {
+        throw new AuthenticationError("User not authorized!");
+      }
       const project = ProjectModel.build(args);
       const projectCreatedStatus = await project.save();
 

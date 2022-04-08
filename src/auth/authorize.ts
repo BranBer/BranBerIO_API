@@ -1,15 +1,25 @@
 import { ForbiddenError } from "apollo-server-errors";
-import { Request } from "express";
+import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import authenticatedUser from "../types/authenticatedUser";
 
-const getAuthorizedUser = (req: Request) => {
+const getAuthorizedUser = (req: Request, res: Response) => {
   let token = req.headers.authorization;
+  console.log("Getting authorized user");
+  console.log(`token: ${token}`);
+  console.log("Cookies");
 
   if (!token) return null;
 
   try {
-    return jwt.verify(token, process.env.JWT_SECRET!);
+    const verifiedToken = jwt.verify(token, process.env.JWT_SECRET!);
+
+    if (verifiedToken) {
+      console.log("SETTING COOKIE");
+      res.cookie("sessionToken", verifiedToken);
+    }
+
+    return verifiedToken;
   } catch {
     return null;
   }

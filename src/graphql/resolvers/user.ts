@@ -9,16 +9,6 @@ import authenticatedUser from "../../types/authenticatedUser";
 //TODO: Email Verification
 const userResolvers: Resolvers = {
   Mutation: {
-    login: async (_, args, __, ___) => {
-      return { token: await authenticate(args.email, args.password) };
-    },
-    register: async (_, args, __, ___) => {
-      let user = await UserModel.create(args as Omit<User, "id">);
-
-      return {
-        message: "Successfully registered a user",
-      };
-    },
     loginGoogle: async (
       _,
       { idToken, email, displayName, picture },
@@ -43,16 +33,17 @@ const userResolvers: Resolvers = {
           email: email,
         },
         defaults: userData,
-      });
-
-      if (!user) {
+      }).catch((err) => {
         throw new AuthenticationError(
           "Something went wrong when trying to sign in with google"
         );
-      }
+      });
+
+      const token = authenticate(user);
 
       return {
         message: "Successfully logged in as google user",
+        accessToken: token,
       };
     },
     loginFacebook: async (
@@ -74,7 +65,7 @@ const userResolvers: Resolvers = {
         accountType: "facebook",
       };
 
-      let userPromise = UserModel.findOrCreate({
+      const [user, created] = await UserModel.findOrCreate({
         where: {
           email: email,
         },
@@ -87,8 +78,11 @@ const userResolvers: Resolvers = {
           );
         });
 
+      const token = authenticate(user);
+
       return {
         message: "Successfully logged in as facebook user",
+        accessToken: token,
       };
     },
   },

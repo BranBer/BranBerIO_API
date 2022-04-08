@@ -10,7 +10,7 @@ import authenticatedUser from "./src/types/authenticatedUser";
 require("dotenv").config();
 
 const corsOptions = {
-  origin: "*",
+  origin: "http://localhost:3000",
   credentials: true,
 };
 
@@ -22,16 +22,21 @@ const startServer = async () => {
   const server = new ApolloServer({
     typeDefs: typeDefs,
     resolvers: resolvers,
-    context: ({ req }) => ({
-      connection: dbConnection,
-      user: getAuthorizedUser(req),
-      isAuthorized: (user: authenticatedUser | null) => {
-        userIsAuthorized(user);
-      },
-      userIsAdmin: (user: authenticatedUser | null) => {
-        userIsAuthorized(user);
-      },
-    }),
+    context: ({ req, res }) => {
+      console.log("COOKIES");
+      console.log(req.cookies);
+
+      return {
+        connection: dbConnection,
+        user: getAuthorizedUser(req, res),
+        isAuthorized: (user: authenticatedUser | null) => {
+          userIsAuthorized(user);
+        },
+        userIsAdmin: (user: authenticatedUser | null) => {
+          userIsAuthorized(user);
+        },
+      };
+    },
   });
 
   await server.start();

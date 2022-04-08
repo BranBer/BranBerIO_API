@@ -54,7 +54,6 @@ export type MutationLoginArgs = {
 
 
 export type MutationLoginFacebookArgs = {
-  accessToken: Scalars['String'];
   displayName: Scalars['String'];
   email: Scalars['String'];
   inputToken: Scalars['String'];
@@ -132,6 +131,7 @@ export type User = {
 
 export type Response = {
   __typename?: 'response';
+  accessToken?: Maybe<Scalars['String']>;
   message: Scalars['String'];
 };
 
@@ -254,7 +254,7 @@ export interface ImageScalarConfig extends GraphQLScalarTypeConfig<ResolversType
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createProject?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationCreateProjectArgs, 'name'>>;
   login?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
-  loginFacebook?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationLoginFacebookArgs, 'accessToken' | 'displayName' | 'email' | 'inputToken'>>;
+  loginFacebook?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationLoginFacebookArgs, 'displayName' | 'email' | 'inputToken'>>;
   loginGoogle?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationLoginGoogleArgs, 'displayName' | 'email' | 'idToken'>>;
   register?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationRegisterArgs, 'displayName' | 'email' | 'password'>>;
   updateProject?: Resolver<Maybe<ResolversTypes['response']>, ParentType, ContextType, RequireFields<MutationUpdateProjectArgs, 'id'>>;
@@ -299,6 +299,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['response'] = ResolversParentTypes['response']> = {
+  accessToken?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
